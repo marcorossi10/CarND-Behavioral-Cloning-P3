@@ -116,35 +116,24 @@ The final model architecture is shown in the table in the previous section.
 #### 3. Creation of the Training Set & Training Process
 
 I created my data set by starting with the provided data and evaluating the results. With this set of data the car was performing already pretty good except for tight curves. So, as already explained in the previous section I augmented the starting data with new data on these challenging curves.
-
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+The following picture shows the starting point of such manoeuvre: the data acquisition was started from that moment and stopped only once the car got to the center of the road in a smooth way.
 
 ![alt text][image1]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+It is important to underline that all the new data has been acquired by using the mouse as steering input and not the keyboard. In this way, smoother angles could be generated instead of having only a set of "impulses" from the keyboard.
 
+To augment the data set, I also flipped all the images and changed the sign of the steering angles. This approach is a good way to augment and balance the data, especially if the track contains many curves on only one side.
 
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-Then I repeated this process on track two in order to get more data points.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. 
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
-
-
-Etc ....
-
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
-
-### Video acqusition
+### Video acquisition
 
 At these two following links it is possible to find the recorded videos:
 
 * Video with the car driving at 9 miles per hour: https://github.com/marcorossi10/CarND-Behavioral-Cloning-P3/blob/master/run1_9M_h.mp4
 * Video with the car driving at 25 miles per hour: https://github.com/marcorossi10/CarND-Behavioral-Cloning-P3/blob/master/run2_25M_h.mp4
 
-I decided to record also a video where the car is drinving faster than the default speed set in the drive.py file.
+I decided to record also a video where the car is driving faster than the default speed set in the drive.py file.
 This scenario is of course more challenging and it can be seen how the predicted model is still performing very well.
