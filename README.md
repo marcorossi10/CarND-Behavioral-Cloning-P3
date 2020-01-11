@@ -10,10 +10,14 @@ Overview
 ---
 The goals / steps of this project are the following:
 * Use the simulator to collect data of good driving behavior
-* Build, a convolution neural network in Keras that predicts steering angles from images
+* Build a convolution neural network in Keras that predicts steering angles from images
 * Train and validate the model with a training and validation set
 * Test that the model successfully drives around track one without leaving the road
 * Summarize the results with a written report
+
+## [Rubric](https://review.udacity.com/#!/rubrics/432/view) Points
+
+### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ### Files Submitted & Code Quality
 
@@ -65,7 +69,7 @@ My final model (from line 37 to line 62 of model.py) consisted of the following 
 
 My model consists of a convolution neural network with 5x5 and 3x3 filter sizes and depths between 24 and 64 (model.py lines 42 to 50).
 
-The model includes RELU layers to introduce nonlinearity (code line 42, 44, 46, 48, 50), and the data is normalized in the model using a Keras lambda layer (code line 39). 
+The model includes RELU layers to introduce nonlinearity (code line 42, 44, 46, 48, 50) and the data is normalized in the model using a Keras lambda layer (code line 39). 
 
 #### 2. Attempts to reduce overfitting in the model
 
@@ -79,7 +83,7 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road so that the the network could learn how to behave when the vehicle was getting closer to the road edges.
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from right sides of the road so that the the network could learn how to behave when the vehicle was getting closer to the road edges.
 
 For details about how I created the training data, see the next section. 
 
@@ -97,9 +101,9 @@ Thus, I decided to implement the neural network proposed by the NVIDIA autonomou
 
 In order to gauge how well the model was working, I also split my image and steering angle data into a training and validation set. The results on training and validation data were good, leading to a small mean squared error loss (<0.009).
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track especially on tight curves. Thus, I acquired more data in these "difficult" curves in order to teach to the neural network how to generete bigger steering angles for these situations.
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track especially on tight curves. Thus, I acquired more data in these "difficult" curves in order to teach to the neural network how to generate bigger steering angles for these situations.
 
-At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
+At the end of the process, the vehicle was able to drive autonomously around the track without leaving the road.
 
 #### 2. Final Model Architecture
 
@@ -107,7 +111,7 @@ The final model architecture is shown in the table in the previous section.
 
 #### 3. Creation of the Training Set & Training Process
 
-I created my data set by starting with the provided data and evaluating the results. With this set of data the car was performing already pretty good except for tight curves. So, as already explained in the previous section I augmented the starting data with new data on these challenging curves.
+I created my data set by starting with the provided data and evaluating the results. With this set of data the car was performing already pretty good except for tight curves. So, as already explained in the previous section, I augmented the starting data with new data on these challenging curves.
 The following picture shows the starting point of such manoeuvre: the data acquisition was started from that moment and stopped only once the car got to the center of the road in a smooth way.
 
 ![alt text][image1]
