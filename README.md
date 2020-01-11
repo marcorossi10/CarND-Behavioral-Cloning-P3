@@ -50,32 +50,32 @@ My final model (from line 37 to line 62 of model.py) consisted of the following 
 |      Input      |              160x320x3 RGB image            |
 |  Lambda layer   |      Normalization of the input data        |
 |  Cropping layer |         Crop unuseful parts of the images   |
-|   Convolutional |          0.85 of keep probability           |
-|   Max pooling   | 2x2 stride, VALID padding,  outputs 14x14x6 |
-|     DROPOUT     |          0.85 of keep probability           |
-|  Convolutional  | 1x1 stride, VALID padding, outputs 10x10x16 |
-|      RELU       |                                             |
-|     DROPOUT     |          0.85 of keep probability           |
-|   Max pooling   | 2x2 stride, VALID padding,  outputs 5x5x16  |
-|     DROPOUT     |          0.85 of keep probability           |
-|   Flattening    |                 outputs 400                 |
-| Fully connected |                 outputs 120                 |
-|      RELU       |                                             |
-|     DROPOUT     |          0.85 of keep probability           |
-| Fully connected |                 outputs 84                  |
-|      RELU       |                                             |
-|     DROPOUT     |          0.85 of keep probability           |
-| Fully connected |                 outputs 43                  |
+|5x5 Convolutional|   Filters=24, 2x2 stride, VALID padding     |
+|      RELU       |               Activation layer              |
+|5x5 Convolutional|   Filters=36, 2x2 stride, VALID padding     |
+|      RELU       |               Activation layer              |
+|5x5 Convolutional|   Filters=48, 2x2 stride, VALID padding     |
+|      RELU       |               Activation layer              |
+|3x3 Convolutional|   Filters=64, 1x1 stride, VALID padding     |
+|      RELU       |               Activation layer              |
+|3x3 Convolutional|   Filters=64, 1x1 stride, VALID padding     |
+|      RELU       |               Activation layer              |
+|     DROPOUT     |          0.5 of drop probability            |
+|   Flattening    |                                             |
+| Fully connected |                 output 100                  |
+| Fully connected |                 output 50                   |
+| Fully connected |                 output 10                   |
+| Fully connected |                 output 1                    |
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
+My model consists of a convolution neural network with 5x5 and 3x3 filter sizes and depths between 24 and 64 (model.py lines 42 to 50).
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+The model includes RELU layers to introduce nonlinearity (code line 42, 44, 46, 48, 50), and the data is normalized in the model using a Keras lambda layer (code line 39). 
 
 #### 2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+The model contains a dropout layer in order to reduce overfitting (model.py lines 52). A drop probability of 0.5 is selected.
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 16-25). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 #### 3. Model parameter tuning
 
@@ -83,6 +83,30 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road so that the the network could learn how to behave when the vehicle was getting closer to the road edges.
 
 For details about how I created the training data, see the next section. 
+
+
+### Model Architecture and Training Strategy
+
+#### 1. Solution Design Approach
+
+The first architecture I implemented was resembling the same architecture (a modified LeNet) used in the previous project where I had to classify different traffic signs. I was curious to see how it would have behaved.
+
+After acquiring some data of center driving and running the simulator, the car was not able to keep the center of the road and was always driving on the right side of the track close to the road edge.
+So I tried to acquire data where the car was recovering from the right side of the road but this was not enough.
+
+Thus, I decided to implement the neural network proposed by the NVIDIA autonomous driving team adding a dropout layer to reduce overfitting.
+
+In order to gauge how well the model was working, I also split my image and steering angle data into a training and validation set. The results on training and validation data were good, leading to a small mean squared error loss (<0.009).
+
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track especially on tight curves. Thus, I acquired more data in these "difficult" curves in order to teach to the neural network how to generete bigger steering angles for these situations.
+
+At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
+
+#### 2. Final Model Architecture
+
+The final model architecture is shown in the table in the previous section.
+
+#### 3. Creation of the Training Set & Training Process
